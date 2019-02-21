@@ -1,59 +1,54 @@
 import React, { Component } from 'react';
 import Buy from './Buy';
-import Bought from './Bought';
+import Cart from './Cart';
 
 
 class ListItems extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      noteText: '',
-      notes: [],
-      bought: [],
+      this.state = {
+        shopItems: '',
+        onShelf: [],
+        inCart: [],
+      }
+
+      this.addItems = this.addItems.bind(this);
+      this.updateShopItems = this.updateShopItems.bind(this);
     }
-
-    this.addNote = this.addNote.bind(this);
-    this.updateNoteText = this.updateNoteText.bind(this);
-  }
-
-  handleClickItem = note => {
-    this.setState({ bought: this.state.bought.concat(note), notes: this.state.notes.filter( n => n !== note)});
-}
-   
-updateNoteText(noteText) {
-      this.setState({ noteText: noteText.target.value })
-}
-
-addNote() {
-    if (this.state.noteText === '') {return}
-      const notesFoundInToBuy = this.state.notes.filter( note => note.toLowerCase() === this.state.noteText.toLowerCase() );
-      const notesFoundInBought = this.state.bought.filter( note => note.toLowerCase() === this.state.noteText.toLowerCase())
   
-    if ( notesFoundInToBuy.length > 0 || notesFoundInBought.length > 0) {
+    // Moves list items the Buy list to the Shopping Cart
+  handleClickItem = items => {
+      this.setState({ inCart: this.state.inCart.concat(items), onShelf: this.state.onShelf.filter( i => i !== items)});
+  }
+    // Logs inputted Items
+  updateShopItems(shopItems) {
+      this.setState({ shopItems: shopItems.target.value })
+  }
+    // Adds items to the Buy List and Filters out duplicate items
+  addItems() {
+    if (this.state.shopItems === '') {return}
+      const onShelfFoundInToBuy = this.state.onShelf.filter( items => items.toLowerCase() ===       this.state.shopItems.toLowerCase() );
+      const onShelfFoundInShoppingCart = this.state.inCart.filter( items => items.toLowerCase()     === this.state.shopItems.toLowerCase())
+    if ( onShelfFoundInToBuy.length > 0 || onShelfFoundInShoppingCart.length > 0) {
       return;
-  }
-      this.setState({ noteText: '', notes: this.state.notes.concat(this.state.noteText) });
-  }
-
-  deleteNote(index) {
-        let notesArr = this.state.notes;
-        notesArr.splice(index, 1);
-        this.setState({ notes: notesArr })
-  }
-    handleKeyPress = (e) => {
-        if (e.key === 'Enter') {
-        this.setState({ noteText: e.target.value }, () => {
-        this.addNote();    
-      })
+      }
+      this.setState({ shopItems: '', onShelf: this.state.onShelf.concat(this.state.shopItems) });
     }
-  }
-  render() {
-    return (
-      <div>
-        <Buy notes={this.state.notes} noteText={this.state.noteText}
-          addNote={this.addNote} handleClickItem={this.handleClickItem} deleteNote={this.deleteNote} handleKeyPress={this.handleKeyPress} updateNoteText={this.updateNoteText}/>
-        <Bought bought={this.state.bought}/>
-      </div>
+    // Allows the 'Enter' key to be used to add notes
+  handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.setState({ shopItems: e.target.value }, () => {
+      this.addItems();    
+        })
+      }
+    }
+render() {
+  return (
+    <div>
+      <Buy onShelf={this.state.onShelf} shopItems={this.state.shopItems}
+        addItems={this.addItems} handleClickItem={this.handleClickItem} handleKeyPress={this.handleKeyPress} updateShopItems={this.updateShopItems}/>
+      <Cart inCart={this.state.inCart}/>
+    </div>
     )
   }
 }

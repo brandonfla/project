@@ -5,23 +5,21 @@ class Buy extends Component {
   render() {
     return (
       <div className="buyList">
-
-      
         <div className="buyBox">
-            <p>To Buy:</p>       
+          <p>To Buy:</p>      
             <input type="text"
-            ref={(input) => {this.textInput = input}} value={this.props.noteText} 
-            onChange={noteText => this.props.updateNoteText(noteText)}
-            onKeyPress={this.props.handleKeyPress}
-        />
-          <button onClick={this.props.addNote}>Add</button>
-                <ul>
-                    {this.props.notes.map( note => (
-                        <li onClick={ () => this.props.handleClickItem(note)}>{note}</li>
-                    ))}
-                </ul>
+              ref={(input) => {this.textInput = input}} value={this.props.shopItems} 
+              onChange={shopItems => this.props.updateShopItems(shopItems)}
+              onKeyPress={this.props.handleKeyPress}
+              />
+            <button onClick={this.props.addItems}>Add</button>
+              <ul>
+                {this.props.onShelf.map( items => (
+                  <li onClick={ () => this.props.handleClickItem(items)}>{items}</li>
+                ))}
+              </ul>
         </div>
-        </div>
+      </div>
     );
   }
 }
