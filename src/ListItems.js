@@ -19,11 +19,11 @@ class ListItems extends Component {
     // Moves list items the Buy list to the Shopping Cart
   handleClickItem = items => {
       this.setState({ inCart: this.state.inCart.concat(items), onShelf: this.state.onShelf.filter( i => i !== items)});
-  }
+    }
     // Logs inputted Items
   updateShopItems(shopItems) {
       this.setState({ shopItems: shopItems.target.value })
-  }
+    }
     // Adds items to the Buy List and Filters out duplicate items
   addItems() {
     if (this.state.shopItems === '') {return}
@@ -33,7 +33,7 @@ class ListItems extends Component {
       return;
       }
       this.setState({ shopItems: '', onShelf: this.state.onShelf.concat(this.state.shopItems) });
-    }
+      }
     // Allows the 'Enter' key to be used to add notes
   handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -42,15 +42,15 @@ class ListItems extends Component {
         })
       }
     }
-render() {
-  return (
-    <div>
-      <Buy onShelf={this.state.onShelf} shopItems={this.state.shopItems}
-        addItems={this.addItems} handleClickItem={this.handleClickItem} handleKeyPress={this.handleKeyPress} updateShopItems={this.updateShopItems}/>
-      <Cart inCart={this.state.inCart}/>
-    </div>
-    )
+  render() {
+    return (
+      <div>
+        <Buy onShelf={this.state.onShelf} shopItems={this.state.shopItems}
+          addItems={this.addItems} handleClickItem={this.handleClickItem} handleKeyPress={this.handleKeyPress} updateShopItems={this.updateShopItems}/>
+        <Cart inCart={this.state.inCart}/>
+      </div>
+      )
+    }
   }
-}
-
+  
 export default ListItems;
