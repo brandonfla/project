@@ -1,21 +1,19 @@
 import React from 'react';
-
-class Cart extends React.Component {
  
-  render() {
+  const Cart = ({inCart}) =>  {
+
     return (
     <div className="boughtList">         
         <p>In Shopping Cart:</p>
       <div>
-        <ul>
-          {this.props.inCart.map( items => (
-            <li>{items}</li>
-          ))}
-        </ul>
+      <ul>
+      {inCart.map( inCart => (
+        <li>{inCart}</li>
+      ))}
+    </ul>
       </div>
     </div>
-    );
-  }
-}
+    )};
+
 
 export default Cart;
